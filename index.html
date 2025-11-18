@@ -1,0 +1,383 @@
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, BookOpenText, Landmark, Hand, ScrollText, Church, Scale } from 'lucide-react';
+
+// Componente para el placeholder de la imagen
+const ImagePlaceholder = ({ title, ornament }) => {
+  const Icon = ornament === '✠' ? Church : (ornament === 'A' ? ScrollText : (ornament === 'B' ? BookOpenText : (ornament === 'C' ? Scale : (ornament === 'D' ? Landmark : (ornament === 'E' ? Hand : ornament === 'F' ? Landmark : ornament === 'G' ? BookOpenText : ornament === 'H' ? Landmark : Church)))));
+
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center p-8 text-amber-900 bg-amber-50 rounded-lg shadow-inner"
+      style={{
+        border: '8px solid #8b4513',
+        borderImage: 'linear-gradient(45deg, #6b3410, #8b4513, #6b3410) 1',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(139, 69, 19, 0.2)',
+        filter: 'sepia(0.2) contrast(1.1) brightness(0.95)',
+      }}
+    >
+      <Icon className="w-16 h-16 sm:w-24 sm:h-24 mb-4 text-amber-950/80" />
+      <p className="text-center text-lg sm:text-xl font-semibold italic max-w-xs" style={{ fontFamily: 'Georgia, serif' }}>
+        {title || "Ilustración Histórica"}
+      </p>
+      <span className="text-xs text-amber-800 mt-2">Manuscrito Antiguo</span>
+    </div>
+  );
+};
+
+const TimelinePresentation = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Datos sin URLs de imágenes externas
+  const slides = [
+    {
+      title: "Educación Cristiana Primitiva",
+      subtitle: "Línea de Tiempo: Del Siglo I al V d.C.",
+      content: "Un recorrido por los hitos más importantes en el desarrollo de la educación cristiana desde sus orígenes hasta la consolidación institucional",
+      ornament: "✠"
+    },
+    {
+      year: "30-100 d.C.",
+      title: "Educación Apostólica Oral",
+      points: [
+        "Enseñanza oral basada en testimonios directos de los apóstoles",
+        "Transmisión de las enseñanzas de Jesús en sinagogas y casas",
+        "Catequesis informal para convertidos del judaísmo y paganismo",
+        "Énfasis en la memorización de enseñanzas y parábolas"
+      ],
+      illumination: "A"
+    },
+    {
+      year: "100-150 d.C.",
+      title: "Escuelas Catequéticas Iniciales",
+      points: [
+        "Surgimiento de instrucción formal para catecúmenos",
+        "Período de preparación de 2-3 años antes del bautismo",
+        "Enseñanza del Credo, Padrenuestro y mandamientos",
+        "Didaché: primer manual de instrucción cristiana"
+      ],
+      illumination: "B"
+    },
+    {
+      year: "150-200 d.C.",
+      title: "Apologetas y Defensa Intelectual",
+      points: [
+        "Justino Mártir: fusión de filosofía griega y doctrina cristiana",
+        "Desarrollo de argumentos racionales para defender la fe",
+        "Creación de escuelas de filosofía cristiana",
+        "Diálogo con la cultura helenística"
+      ],
+      illumination: "C"
+    },
+    {
+      year: "180-250 d.C.",
+      title: "Escuela de Alejandría",
+      points: [
+        "Fundación por Panteno, consolidada por Clemente de Alejandría",
+        "Centro de estudios teológicos más importante de la época",
+        "Orígenes: método alegórico de interpretación bíblica",
+        "Integración de filosofía platónica con teología cristiana"
+      ],
+      illumination: "D"
+    },
+    {
+      year: "250-313 d.C.",
+      title: "Persecuciones y Educación Clandestina",
+      points: [
+        "Educación en catacumbas y lugares secretos",
+        "Fortalecimiento de la instrucción oral y memorística",
+        "Desarrollo de símbolos cristianos como método educativo",
+        "Literatura hagiográfica: enseñanza mediante ejemplos de mártires"
+      ],
+      illumination: "E"
+    },
+    {
+      year: "313-380 d.C.",
+      title: "Edicto de Milán y Legitimación",
+      points: [
+        "Legalización del cristianismo bajo Constantino",
+        "Construcción de basílicas como centros de enseñanza",
+        "Concilios ecuménicos: sistematización doctrinal",
+        "Desarrollo del año litúrgico como herramienta pedagógica"
+      ],
+      illumination: "F"
+    },
+    {
+      year: "380-450 d.C.",
+      title: "Padres de la Iglesia y Sistematización",
+      points: [
+        "San Agustín: 'De Magistro' y 'De Catechizandis Rudibus'",
+        "San Jerónimo: traducción de la Biblia al latín (Vulgata)",
+        "San Juan Crisóstomo: homilías pedagógicas",
+        "Desarrollo de métodos catequéticos estructurados"
+      ],
+      illumination: "G"
+    },
+    {
+      year: "450-500 d.C.",
+      title: "Consolidación Institucional",
+      points: [
+        "Establecimiento de escuelas monásticas (Regla de San Benito, 529)",
+        "Preservación del conocimiento clásico en monasterios",
+        "Desarrollo del trivium y quadrivium",
+        "Educación clerical obligatoria para sacerdotes"
+      ],
+      illumination: "H"
+    },
+    {
+      title: "Legado de la Educación Cristiana Primitiva",
+      subtitle: "Herencia para la Civilización Occidental",
+      points: [
+        "Creación del primer sistema educativo universal en Occidente",
+        "Preservación de textos clásicos greco-romanos",
+        "Desarrollo de métodos pedagógicos modernos",
+        "Fundación de la estructura que llevó a las universidades"
+      ],
+      ornament: "✠"
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const slide = slides[currentSlide];
+  const isCover = currentSlide === 0 || currentSlide === slides.length - 1;
+
+  // Estilos de la página de pergamino (usados en móvil)
+  const parchmentStyle = {
+    background: 'linear-gradient(to bottom right, #f5e6d3 0%, #faf6ed 40%, #fff9f0 100%)',
+    border: '3px solid #8b4513',
+    boxShadow: '0 15px 40px rgba(0,0,0,0.5), inset 0 0 30px rgba(139, 69, 19, 0.15)',
+    filter: 'sepia(0.05)',
+  };
+
+  const PageContent = ({ isLeftPage, slideData }) => (
+    <div className={`relative h-full flex flex-col p-8 sm:p-12 ${isLeftPage ? 'pr-6' : 'pl-6'} md:p-12`}>
+      {isLeftPage ? (
+        // Contenido de la Página Izquierda (Imagen/Placeholder)
+        <div className="flex-1 flex items-center justify-center min-h-64 sm:min-h-0">
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <ImagePlaceholder title={slideData.title} ornament={slideData.illumination || slideData.ornament} />
+          </div>
+        </div>
+      ) : (
+        // Contenido de la Página Derecha (Texto)
+        <div className="flex-1 flex flex-col">
+          {isCover ? (
+            // Portada o Contraportada
+            <div className="flex-1 flex flex-col justify-center items-center text-center space-y-6 md:space-y-8">
+              {slideData.ornament && (
+                <div className="text-6xl sm:text-7xl text-amber-900 mb-4">{slideData.ornament}</div>
+              )}
+              <h1 className="text-4xl sm:text-5xl font-bold text-amber-950 leading-tight" style={{ fontFamily: 'Georgia, serif', textShadow: '1px 1px 3px rgba(0,0,0,0.1)' }}>
+                {slideData.title}
+              </h1>
+              {slideData.subtitle && (
+                <h2 className="text-xl sm:text-2xl text-amber-800 italic" style={{ fontFamily: 'Georgia, serif' }}>
+                  {slideData.subtitle}
+                </h2>
+              )}
+              {slideData.content && (
+                <p className="text-lg sm:text-xl text-amber-900 leading-relaxed max-w-lg mt-4" style={{ fontFamily: 'Georgia, serif' }}>
+                  {slideData.content}
+                </p>
+              )}
+              {slideData.points && (
+                <ul className="text-left space-y-3 mt-4 sm:mt-8 list-none">
+                  {slideData.points.map((point, idx) => (
+                    <li key={idx} className="flex items-start text-base sm:text-lg text-amber-900" style={{ fontFamily: 'Georgia, serif' }}>
+                      <span className="text-amber-700 mr-3 text-xl font-bold">❧</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {slideData.ornament && (
+                <div className="text-3xl sm:text-4xl text-amber-900 mt-6">{slideData.ornament}</div>
+              )}
+            </div>
+          ) : (
+            // Páginas de Contenido
+            <div className="flex-1 flex flex-col">
+              {/* Letra capital iluminada */}
+              <div className="float-left mr-4 mb-2">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center text-5xl sm:text-6xl font-bold text-amber-900 border-4 border-amber-900 bg-amber-100 rounded-sm" style={{
+                  fontFamily: 'Georgia, serif',
+                  boxShadow: 'inset 0 0 10px rgba(139, 69, 19, 0.3)'
+                }}>
+                  {slideData.illumination}
+                </div>
+              </div>
+
+              {/* Título y año */}
+              <div className="mb-4 sm:mb-6 mt-0">
+                <div className="text-xl sm:text-2xl font-bold text-amber-800" style={{ fontFamily: 'Georgia, serif' }}>
+                  {slideData.year}
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-amber-950 mt-1 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                  {slideData.title}
+                </h2>
+              </div>
+
+              {/* Línea decorativa */}
+              <div className="w-full h-1 bg-gradient-to-r from-transparent via-amber-900 to-transparent mb-4 sm:mb-6 opacity-30"></div>
+
+              {/* Puntos de contenido */}
+              <ul className="space-y-4 sm:space-y-5 flex-1">
+                {slideData.points.map((point, idx) => (
+                  <li key={idx} className="flex items-start text-sm sm:text-base text-amber-900 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-amber-900 text-amber-50 mr-3 sm:mr-4 mt-1 text-xs sm:text-sm font-bold" style={{
+                      boxShadow: '0 2px 8px rgba(139, 69, 19, 0.4)'
+                    }}>
+                      {idx + 1}
+                    </span>
+                    <span className="flex-1">{point}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Ornamento final */}
+              <div className="text-center mt-4 sm:mt-6 text-2xl sm:text-3xl text-amber-900 opacity-60">
+                ❦
+              </div>
+            </div>
+          )}
+
+          {/* Número de página (solo en desktop para el efecto de libro) */}
+          <div className="absolute bottom-4 left-0 right-0 text-center text-amber-900 text-xs sm:text-sm hidden md:block" style={{ fontFamily: 'Georgia, serif' }}>
+            {currentSlide * 2 + 2}
+          </div>
+        </div>
+      )}
+
+      {/* Número de página (solo en desktop para el efecto de libro) */}
+      {isLeftPage && (
+        <div className="absolute bottom-4 left-0 right-0 text-center text-amber-900 text-xs sm:text-sm hidden md:block" style={{ fontFamily: 'Georgia, serif' }}>
+          {currentSlide * 2 + 1}
+        </div>
+      )}
+
+      {/* Textura de papel para ambas páginas */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='4' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
+      }}></div>
+
+      {/* Manchas de envejecimiento */}
+      <div className="absolute top-10 right-10 w-24 h-24 bg-amber-900 rounded-full opacity-5 blur-2xl pointer-events-none"></div>
+    </div>
+  );
+
+  return (
+    <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 sm:p-8" style={{
+      background: 'linear-gradient(135deg, #3e2723 0%, #4e342e 50%, #3e2723 100%)',
+    }}>
+      {/* Contador de páginas */}
+      <div className="absolute top-4 sm:top-8 left-1/2 transform -translate-x-1/2 bg-amber-900 text-amber-50 px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-xl border-2 border-amber-700 z-30">
+        <span className="font-semibold text-sm sm:text-base" style={{ fontFamily: 'Georgia, serif' }}>
+          Capítulo {currentSlide + 1} de {slides.length}
+        </span>
+      </div>
+
+      {/* Contenedor del Libro/Pergamino */}
+      <div className="relative w-full max-w-xl md:max-w-7xl h-auto md:h-[85vh] flex items-center justify-center mt-16 md:mt-0">
+        {/* Sombra del libro (solo visible en desktop) */}
+        <div className="absolute inset-0 bg-black opacity-40 blur-3xl transform translate-y-8 hidden md:block"></div>
+
+        {/* Libro / Pergamino */}
+        <div className="relative w-full h-auto md:h-full flex flex-col md:flex-row shadow-2xl overflow-hidden rounded-lg md:rounded-none" style={{
+          transformStyle: 'preserve-3d',
+          perspective: '2000px',
+        }}>
+
+          {/* Página principal (Responsive Card) */}
+          <div className="md:hidden w-full h-auto mb-4" style={parchmentStyle}>
+            {/* El contenido de ambas páginas se fusiona verticalmente para móvil */}
+            <PageContent isLeftPage={true} slideData={slide} />
+            <div className="w-full h-px bg-amber-900/50 my-2"></div>
+            <PageContent isLeftPage={false} slideData={slide} />
+          </div>
+
+          {/* Contenido de dos páginas (Desktop/Tablet) */}
+          <div className="hidden md:flex w-full h-full">
+            {/* Lomo del libro (solo en desktop) */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-16 -ml-8 z-20 hidden lg:block" style={{
+              background: 'linear-gradient(to right, #4a2c2a 0%, #5d3a38 30%, #4a2c2a 50%, #5d3a38 70%, #4a2c2a 100%)',
+              boxShadow: 'inset -4px 0 8px rgba(0,0,0,0.5), inset 4px 0 8px rgba(0,0,0,0.5)',
+              borderLeft: '2px solid #3e2723',
+              borderRight: '2px solid #3e2723'
+            }}>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -rotate-90 text-amber-300 font-bold whitespace-nowrap text-sm tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
+                EDUCACIÓN CRISTIANA
+              </div>
+            </div>
+            {/* Página izquierda (Imagen) */}
+            <div className="w-1/2 h-full relative overflow-hidden" style={{
+              ...parchmentStyle,
+              borderRight: 'none',
+              borderLeft: '3px solid #8b4513',
+              boxShadow: 'inset -20px 0 30px rgba(139, 69, 19, 0.1), -5px 0 15px rgba(0,0,0,0.3)',
+              transform: 'rotateY(2deg)'
+            }}>
+              <PageContent isLeftPage={true} slideData={slide} />
+            </div>
+            {/* Página derecha (Contenido) */}
+            <div className="w-1/2 h-full relative overflow-hidden" style={{
+              ...parchmentStyle,
+              borderLeft: 'none',
+              borderRight: '3px solid #8b4513',
+              boxShadow: 'inset 20px 0 30px rgba(139, 69, 19, 0.1), 5px 0 15px rgba(0,0,0,0.3)',
+              transform: 'rotateY(-2deg)'
+            }}>
+              <PageContent isLeftPage={false} slideData={slide} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controles de navegación */}
+      <div className="mt-4 sm:mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 z-30">
+        <button
+          onClick={prevSlide}
+          className="bg-amber-900 text-amber-50 px-6 py-3 sm:px-8 sm:py-4 rounded-lg hover:bg-amber-800 transition-all shadow-xl flex items-center space-x-2 sm:space-x-3 border-2 border-amber-700 w-40 sm:w-auto justify-center"
+          style={{ fontFamily: 'Georgia, serif' }}
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          <span className="font-semibold">Anterior</span>
+        </button>
+        <div className="flex space-x-2 sm:space-x-3">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSlide(idx)}
+              aria-label={`Ir a diapositiva ${idx + 1}`}
+              className={`transition-all rounded-full ${
+                idx === currentSlide
+                   ? 'w-10 h-3 sm:w-12 sm:h-4 bg-amber-700'
+                   : 'w-3 h-3 sm:w-4 sm:h-4 bg-amber-900 hover:bg-amber-700 opacity-60'
+              }`}
+              style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
+            />
+          ))}
+        </div>
+        <button
+          onClick={nextSlide}
+          className="bg-amber-900 text-amber-50 px-6 py-3 sm:px-8 sm:py-4 rounded-lg hover:bg-amber-800 transition-all shadow-xl flex items-center space-x-2 sm:space-x-3 border-2 border-amber-700 w-40 sm:w-auto justify-center"
+          style={{ fontFamily: 'Georgia, serif' }}
+        >
+          <span className="font-semibold">Siguiente</span>
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default TimelinePresentation;
